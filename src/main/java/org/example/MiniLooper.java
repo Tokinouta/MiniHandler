@@ -1,5 +1,18 @@
 package org.example;
 
+/**
+ * Class responsible for managing a message loop in a background thread.
+ *
+ * <p>
+ * A [MiniLooper](file://E:\Codes\MiniHandler\src\main\java\org\example\MiniLooper.java#L2-L45) runs a loop that continuously retrieves and processes messages from a {@link MessageQueue}.
+ * It provides thread-local storage, ensuring each thread has its own instance via {@link #prepare()} and {@link #myLooper()}.
+ * </p>
+ *
+ * <p>
+ * The looper can be terminated gracefully by calling {@link #quit()}, which interrupts the background thread.
+ * Messages are processed in the order of their scheduled time.
+ * </p>
+ */
 public class MiniLooper {
     private static final ThreadLocal<MiniLooper> threadLooper = new ThreadLocal<>();
 
@@ -16,6 +29,7 @@ public class MiniLooper {
         try {
             while (!Thread.currentThread().isInterrupted()) {
                 Message msg = queue.next();
+                System.out.println("Processing message: " + msg + " callback: " +  msg.callback);
                 if (msg.callback != null) {
                     msg.callback.run();
                 }

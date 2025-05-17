@@ -23,23 +23,15 @@ public class Main {
             }
         };
 
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("run, msg received at " + System.currentTimeMillis());
-            }
-        });
-
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("runDelayed, msg received at " + System.currentTimeMillis());
-            }
-        }, 1000);
+        handler.post(() -> System.out.println("run, msg received at " + System.currentTimeMillis()));
+        handler.postDelayed(() -> System.out.println("runDelayed, msg received at " + System.currentTimeMillis()), 1000);
+        handler.sendMessage(2, 5, "Low priority message", () -> System.out.println("Low priority message"));
+        handler.sendMessage(1, -1, "High priority message", () -> System.out.println("High priority message"));
 
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             e.printStackTrace();
         }
 
