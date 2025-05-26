@@ -29,9 +29,16 @@ public class MiniLooper {
         try {
             while (!Thread.currentThread().isInterrupted()) {
                 Message msg = queue.next();
-                System.out.println("Processing message: " + msg + " callback: " +  msg.callback);
+                // System.out.println("Processing message: " + msg + " callback: " +  msg.callback);
                 if (msg.callback != null) {
                     msg.callback.run();
+                } else {
+                    MiniHandler handler = msg.target;
+                    if (handler != null) {
+                        handler.handleMessage(msg);
+                    } else {
+                        System.out.println("No handler to process message: " + msg);
+                    }
                 }
             }
         } catch (InterruptedException e) {

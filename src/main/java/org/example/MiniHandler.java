@@ -33,16 +33,11 @@ public class MiniHandler {
     }
 
     public void post(Runnable r) {
-        sendMessageDelayed(new Message(0, null, r, System.currentTimeMillis(), 0), 0);
+        sendMessageDelayed(new Message(0, null, r, System.currentTimeMillis(), 0, null), 0);
     }
 
     public void postDelayed(Runnable r, long delayMillis) {
-        sendMessageDelayed(new Message(0, null, r, System.currentTimeMillis() + delayMillis, 0), delayMillis);
-    }
-
-    public void sendMessage(int what, int priority, Object obj, Runnable r) {
-        Message msg = new Message(what, obj, r, System.currentTimeMillis(), priority);
-        sendMessageDelayed(msg, 0);
+        sendMessageDelayed(new Message(0, null, r, System.currentTimeMillis() + delayMillis, 0, null), delayMillis);
     }
 
     public void sendMessage(Message msg) {

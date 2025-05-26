@@ -1,6 +1,5 @@
 package org.example;
 
-import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -19,9 +18,7 @@ import java.util.PriorityQueue;
  * </p>
  */
 public class MessageQueue {
-    private final PriorityQueue<Message> queue = new PriorityQueue<>(
-            Comparator.comparingLong(a -> a.when)
-    );
+    private final PriorityQueue<Message> queue = new PriorityQueue<>();
 
     public synchronized void enqueueMessage(Message msg) {
         queue.offer(msg);
@@ -31,12 +28,12 @@ public class MessageQueue {
     public synchronized Message next() throws InterruptedException {
         while (true) {
             if (queue.isEmpty()) {
-                System.out.println("MessageQueue.next() queue is empty");
+                // System.out.println("MessageQueue.next() queue is empty");
                 wait();
             } else {
                 Message msg = queue.peek();
                 long now = System.currentTimeMillis();
-                System.out.println("MessageQueue.next() queue gets " + msg.when + " now " + now);
+                // System.out.println("MessageQueue.next() queue gets " + msg.when + " now " + now);
                 if (msg.when <= now) {
                     return queue.poll();
                 }

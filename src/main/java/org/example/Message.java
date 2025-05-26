@@ -19,13 +19,15 @@ public class Message implements Comparable<Message> {
     public Runnable callback;
     public long when;
     public int priority;
+    public MiniHandler target;
 
-    public Message(int what, Object obj, Runnable callback, long when, int priority) {
+    public Message(int what, Object obj, Runnable callback, long when, int priority, MiniHandler target) {
         this.what = what;
         this.obj = obj;
         this.callback = callback;
         this.when = when;
         this.priority = priority;
+        this.target = target;
     }
 
     @Override
